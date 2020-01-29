@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fh.mapper.MovieMapper">
+
+
+
+    <select id="queryList" resultType="com.fh.model.Movie" parameterType="com.fh.MenuSearchParm.MenuSearchParm">
+
+        select m.*,t.name "typeName",a.name "areaName" from t_movie m
+        left join t_moviearea ma on m.id = ma.movieId
+        left join t_area a on a.id = ma.areaId
+        left join t_movietype mt on m.id = mt.movieId
+        left join t_type t on t.id = mt.typeId
+   <!-- <include refid="sql_where"></include>-->
+       where status=1
+        limit #{start},#{length}
+
+    </select>
+
+    <select id="queryCount" resultType="long" parameterType="com.fh.MenuSearchParm.MenuSearchParm">
+
+     select count(*) from t_movie
+       <!-- <include refid="sql_where"></include>-->
+    </select>
+
+
+    <insert id="add" parameterType="movie" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert  into  t_movie  (name,mins,filePath,isHot,grade,showTime,createTime,updateTime,introduce) values (#{name},#{mins},#{filePath},#{isHot},#{grade},#{showTime},#{createTime},#{updateTime},#{introduce})
+
+	</insert>
+
+
+
+
+
+    <select id="toUpdate" parameterType="int"  resultType="com.fh.model.Movie">
+    select * from  ssm_movie  where  id=#{id}
+      </select>
+
+
+    <update id="update"  parameterType="movie">
+    update   ssm_movie  set  name=#{name},price=#{price},total=#{total},grade=#{grade},isUp=#{isUp},director=#{director},performer=#{performer},mins=#{mins},isHot=#{isHot},areaId=#{areaId},typeId=#{typeId},alanguage=#{alanguage},showTime=#{showTime},createTime=#{createTime} where  id=#{id}
+    </update>
+
+
+    <delete id="delete" parameterType="java.lang.Integer">
+    delete  from   ssm_movie  where  id = #{id}
+</delete>
+
+
+
+
+<!--
+<sql id="sql_where">
+
+        <where>
+           <if test="movieName != '' and movieName != null">
+                and movieName like concat('%',#{movieName},'%')
+            </if>
+            <if test="country !=0 and country != null">
+                and  country =#{country}
+            </if>
+
+            <if test="typeId != null and typeId != 0">
+                and m.atype = #{typeId}
+            </if>
+
+ <if test="minDate!=null">
+                and  showTime  >=#{minDate}
+            </if>
+            <if test="maxDate!=null">
+                and  showTime  &lt;=#{maxDate}
+            </if>
+
+
+
+        </where>
+
+
+
+    </sql>
+-->
+
+
+
+
+</mapper>
