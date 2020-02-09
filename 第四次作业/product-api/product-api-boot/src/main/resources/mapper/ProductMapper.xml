@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fh.mapper.ProductMapper">
+    <select id="queryProductList" parameterType="com.fh.model.Product" resultMap="MapList">
+      select p.*,
+      CONCAT(ifnull(a1.name,""),if(a.name is null,'','>'),ifnull(a.name,"")) areaname
+       from t_product p
+      left join t_area a on a.id=p.areaId
+      left join t_area a1 on a1.id=a.pid
+      where p.isdel = 1
+       limit #{start},#{length}
+    </select>
+    <select id="queryCount" resultType="Integer" parameterType="com.fh.model.Product">
+      select count(*)  FROM  t_product where isdel = 1
+    </select>
+    <select id="selectProductByName" parameterType="String" resultType="com.fh.model.Product">
+        select * from t_product where name=#{name}
+    </select>
+    <select id="queryProductById" resultType="com.fh.model.Product" parameterType="Integer">
+        select * from t_product where id=#{id}
+    </select>
+    <insert id="addProduct" parameterType="com.fh.model.Product">
+        insert into t_product (name,price,sales,barCode,stock,imageUrl,producedDate,shelfLife,status,areaId,isdel)
+        values (#{name},#{price},#{sales},#{barCode},#{stock},#{imageUrl},#{producedDate},#{shelfLife},#{status},#{areaId},1)
+    </insert>
+    <update id="updateProduct" parameterType="com.fh.model.Product">
+         update t_product set name=#{name},price=#{price},sales=#{sales},barCode=#{barCode},stock=#{stock},
+        imageUrl =#{imageUrl},producedDate=#{producedDate},shelfLife=#{shelfLife},status=#{status},areaId=#{areaId}
+        where id=#{id}
+    </update>
+    <update id="deleteProduct" parameterType="Integer">
+        update t_product set isdel=0 where id=#{id}
+    </update>
+    <update id="updateProductStatus" parameterType="Integer">
+        update t_product set status=#{status} where id=#{id}
+    </update>
+    <update id="intProduct" parameterType="Integer">
+        update t_product set stock=stock+#{stock} where id=#{id}
+    </update>
+    <update id="outProduct" parameterType="Integer">
+        update t_product set stock=stock-#{stock} where id=#{id}
+    </update>
+    <resultMap id="MapList" type="Map">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+        <result property="price" column="price"></result>
+        <result property="sales" column="sales"></result>
+        <result property="barCode" column="barCode"></result>
+        <result property="stock" column="stock"></result>
+        <result property="ImageUrl" column="ImageUrl"></result>
+        <result property="producedDate" column="producedDate"></result>
+        <result property="shelfLife" column="shelfLife"></result>
+        <result property="status" column="status"></result>
+    </resultMap>
+</mapper>
