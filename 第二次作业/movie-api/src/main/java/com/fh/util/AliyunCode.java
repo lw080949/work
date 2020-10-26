@@ -16,17 +16,17 @@ public class AliyunCode {
  public static boolean sendSms(String phone, String code) {
   boolean success=false;
   try {
-  DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4FqAyjEUPBmNcR8ceDv3", "PBEJg2LKUktRQC5I34GmBkyvBaFawr");
+  DefaultProfile profile = DefaultProfile.getProfile("", "", "");
   IAcsClient client = new DefaultAcsClient(profile);
   CommonRequest request = new CommonRequest();
   request.setMethod(MethodType.POST);
-  request.setDomain("dysmsapi.aliyuncs.com");
+  request.setDomain("");
   request.setVersion("2017-05-25");
   request.setAction("SendSms");
-  request.putQueryParameter("RegionId", "cn-hangzhou");
+  request.putQueryParameter("", "");
   request.putQueryParameter("PhoneNumbers", phone);
-  request.putQueryParameter("SignName", "飞狐小卖部");
-  request.putQueryParameter("TemplateCode", "SMS_180785146");
+  request.putQueryParameter("SignName", "");
+  request.putQueryParameter("TemplateCode", "");
   request.putQueryParameter("TemplateParam", "{\"code\":" + code + "}");
    CommonResponse response = client.getCommonResponse(request);
    String data = response.getData();
