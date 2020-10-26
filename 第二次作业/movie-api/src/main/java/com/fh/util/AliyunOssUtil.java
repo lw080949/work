@@ -10,10 +10,10 @@ public class AliyunOssUtil {
 
  private final static String ENDPOINT = "http://oss-cn-qingdao.aliyuncs.com";
  // 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
- private final static String ACCESS_KEY_ID = "LTAI4FqAyjEUPBmNcR8ceDv3";
- private final static String ACCESS_KEY_SECRET = "PBEJg2LKUktRQC5I34GmBkyvBaFawr";
- private final static String BUCKET_NAME = "xueya0923";
- private final static String BUCKET_URL = "http://xueya0923.oss-cn-qingdao.aliyuncs.com";
+ private final static String ACCESS_KEY_ID = "zxc";
+ private final static String ACCESS_KEY_SECRET = "asd";
+ private final static String BUCKET_NAME = "1";
+ private final static String BUCKET_URL = "1";
 
  public static String uploadFile(InputStream inputStream,String originalFileName,String folderName){
   // <yourObjectName>上传文件到OSS时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。
